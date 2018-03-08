@@ -1,0 +1,4 @@
+{
+  "baseCurrency": "USD",
+  "foreignCurrencies": ["JPY", "KRW", "EUR", "GBP"]
+}
