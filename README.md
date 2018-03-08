@@ -2,7 +2,10 @@
 
 This is just a collection of tools that might be helpful to crypto traders using Coinigy.
 
-Currently it consists only of a consolidated(average) price tool but I will add more features soon.
+Currently it consists only of a consolidated(average) price tool.
+
+More features and testing/error handling will be added soon.
+
 
 ![Preview](https://i.imgur.com/Bhbog7P.png)
 
