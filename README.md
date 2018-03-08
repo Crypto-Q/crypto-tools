@@ -17,9 +17,7 @@ Open terminal in package location. ( Win 10 - Shift Right Click in Explorer, Ope
 
 ## Configuration
 
-Browse to the config folder in the package. Modify the following file to your liking:
-
-    exchanges.config.js
+Browse to the config folder in the package. Modify 'exchanges.config.js' file to your liking:
 
     {
      name:  'Bitfinex',      // Exchange Nickname
