@@ -2,7 +2,7 @@
 
 This is just a collection of tools that might be helpful to crypto traders using Coinigy.
 
-![Preview](https://i.imgur.com/Bhbog7P.png
+![Preview](https://i.imgur.com/Bhbog7P.png)
 
 ## Installation
 
@@ -48,7 +48,11 @@ Open terminal in package location. ( Win 10 - Shift Right Click in Explorer, Ope
 ## Donations
 
 If you find any of my tools helpful feel free to donate:
+
 **BTC:** 1Es1nLzBzwMn6nu8Dng3LPp4vfEa8s4mK2
+
 **LTC:** LYH8VQSek33Axa6Zn2MsngR2Y2Lf7mJXpF
+
 **ETH:** 0xcd2c6e708d7696e403f3be5ca6e5d5519ffbeb1b
+
 **XMR:** 48pRFKSLchCLmZWHvWRHc6hJYX8C8Bc7MZfut3S7CtgvRfRetm52W5c9fnt93spKmeTXaT2AwBc3GDUr9QdcYZmtQ76VLaQ
