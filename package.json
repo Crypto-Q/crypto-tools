@@ -22,9 +22,7 @@
     "axios": "^0.18.0",
     "dotenv": "^5.0.1",
     "money": "^0.2.0",
-    "nexmo": "^2.2.0",
-    "socketcluster-client": "^10.1.1",
-    "terminal-kit": "^1.15.0"
+    "socketcluster-client": "^10.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

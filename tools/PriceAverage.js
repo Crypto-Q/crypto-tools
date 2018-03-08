@@ -1,7 +1,6 @@
 import axios from 'axios';
 import sc from 'socketcluster-client';
 import fx from 'money';
-// import * as terminal from 'terminal-kit';
 
 import apiConfig from '../config/api.config';
 import config from '../config/PriceAverage.config.json';
@@ -25,7 +24,6 @@ class PriceAverage {
     fx.base = this.base;
     fx.rates = this.exchangeRates;
     fx.rates.USD = 1;
-    console.log(this.exchangeRates);
   }
 
   async connectApi() {
@@ -33,32 +31,36 @@ class PriceAverage {
     await this.socket.emit('auth', this.apiConfig.creds);
     this.socket.on('error', err => console.log(err));
     this.socket.on('authenticate', () => this.streamData());
-    console.log('Connected to the API');
   }
 
-  async streamData() {
-    this.exchanges.map((exchange) => {
-      const x = this.exchanges.filter(_exchange => _exchange.name === exchange.name)[0];
+  streamData() {
+    this.exchanges
+      .filter(_exchange => _exchange.enabled === true)
+      .map((exchange) => {
+        const x = this.exchanges.filter(_exchange => _exchange.name === exchange.name)[0];
 
-      if (exchange.inverted === false) {
-        this.apiChannels[exchange] = this.socket.subscribe(`TRADE-${exchange.ticker}--BTC--${exchange.base}`);
-      } else {
-        this.apiChannels[exchange] = this.socket.subscribe(`TRADE-${exchange.ticker}--${exchange.base}--BTC`);
-      }
-
-      this.apiChannels[exchange].watch((data) => {
-        if (exchange.base === this.baseCurrency) {
-          x.price = data.price;
+        if (exchange.inverted === false) {
+          this.apiChannels[exchange] = this.socket.subscribe(`TRADE-${exchange.ticker}--${exchange.assetTicker}--${exchange.base}`);
         } else {
-          x.price = fx.convert(data.price, { from: x.base, to: this.baseCurrency });
+          this.apiChannels[exchange] = this.socket.subscribe(`TRADE-${exchange.ticker}--${exchange.base}--${exchange.assetTicker}`);
         }
-        this.calcAverage();
+
+        this.apiChannels[exchange].watch((data) => {
+          if (exchange.base === this.baseCurrency || exchange.base === `${this.baseCurrency}T`) {
+            x.price = data.price;
+          } else {
+            x.price = fx.convert(data.price, { from: x.base, to: this.baseCurrency });
+          }
+          this.calcAverage();
+        });
       });
-    });
   }
 
   calcAverage() {
-    this.liveExchanges = this.exchanges.filter(_exchange => _exchange.price);
+    this.liveExchanges = this.exchanges.filter(_exchange =>
+      _exchange.price &&
+      _exchange.enabled === true &&
+      _exchange.includeInAverage === true);
     this.liveExchangeCount = Object.keys(this.liveExchanges).length;
     let priceSum = 0;
     Object.entries(this.liveExchanges).map((exchange) => {
@@ -84,6 +86,7 @@ class PriceAverage {
     console.log(`
     Bitcoin average price: ${this.averagePrice.toFixed(2)} ( from ${this.liveExchangeCount} exchanges )
     `);
+    // console.log(this.exchanges)
   }
 
   async run() {
